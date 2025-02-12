@@ -51,12 +51,8 @@ RUN bash /tmp/library-scripts/node-debian.sh "${NVM_DIR}" "${NODE_VERSION}" "${U
 # Remove library scripts for final image
 RUN rm -rf /tmp/library-scripts
 
-# Inserting own dotfiles and nvim config
-RUN mkdir -p /home/vscode/.config/nvim/
-
 COPY ./dotfiles/.tmux.conf /home/vscode/.tmux.conf
 COPY ./dotfiles/.zshrc /home/vscode/.zshrc
-COPY ./nvim-config/* /home/vscode/.config/nvim/
 
 RUN chown -R vscode:vscode /home/vscode
 
