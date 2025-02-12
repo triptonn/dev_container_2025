@@ -44,8 +44,7 @@
 				"ms-python.vscode-pylance",
 				"ms-python.pylint",
 				"gruntfuggly.todo-tree",
-				"njpwerner.autodocs",
-				"kevinrose.vsc-python-indent"
+				"njpwerner.autodocs"
 			]
 		}
 	},
