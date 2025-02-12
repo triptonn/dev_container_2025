@@ -76,10 +76,11 @@ apt_get_update_if_needed()
 
 # Run install apt-utils to avoid debconf warning then verify presence of other common developer tools and dependencies
 if [ "${PACKAGES_ALREADY_INSTALLED}" != "true" ]; then
-
+    # Added gpg as dependency for eza
     package_list="apt-utils \
         openssh-client \
         gnupg2 \
+        gpg \
         dirmngr \
         iproute2 \
         procps \
@@ -96,8 +97,10 @@ if [ "${PACKAGES_ALREADY_INSTALLED}" != "true" ]; then
         neovim \
         tmux \
         fzf \
+        fd-find \
         zoxide \
         bat \
+        thefuck \
         less \
         jq \
         lsb-release \
@@ -118,7 +121,6 @@ if [ "${PACKAGES_ALREADY_INSTALLED}" != "true" ]; then
         strace \
         manpages \
         manpages-dev \
-        eza \
         init-system-helpers"
         
     # Needed for adding manpages-posix and manpages-posix-dev which are non-free packages in Debian
@@ -162,7 +164,8 @@ if [ "${PACKAGES_ALREADY_INSTALLED}" != "true" ]; then
     fi
 
     echo "Packages to verify are installed: ${package_list}"
-    apt-get -y install --no-install-recommends "${package_list}" 2> >( grep -v 'debconf: delaying package configuration, since apt-utils is not installed' >&2 )
+    # shellcheck disable=SC2086
+    apt-get -y install --no-install-recommends ${package_list} 2> >( grep -v 'debconf: delaying package configuration, since apt-utils is not installed' >&2 )
         
     # Install git if not already installed (may be more recent than distro version)
     if ! type git > /dev/null 2>&1; then

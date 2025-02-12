@@ -40,7 +40,12 @@
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
 				"ms-python.python",
-				"ms-python.vscode-pylance"
+				"ms-python.debugpy",
+				"ms-python.vscode-pylance",
+				"ms-python.pylint",
+				"gruntfuggly.todo-tree",
+				"njpwerner.autodocs",
+				"kevinrose.vsc-python-indent"
 			]
 		}
 	},
