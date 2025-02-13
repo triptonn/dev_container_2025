@@ -53,8 +53,13 @@ RUN rm -rf /tmp/library-scripts
 
 COPY ./dotfiles/.tmux.conf /home/vscode/.tmux.conf
 COPY ./dotfiles/.zshrc /home/vscode/.zshrc
+COPY ./dotfiles/tmux-cht-command /home/vscode/tmux-cht-command
+COPY ./dotfiles/tmux-cht-languages /home/vscode/tmux-cht-languages
+COPY ./scripts/tmux-cht.sh /home/vscode/.scripts/tmux-cht.sh
+COPY ./scripts/tmux-sessionizer /home/vscode/.scripts/tmux-sessionizer
 
-RUN chown -R vscode:vscode /home/vscode
+RUN chown -R vscode:vscode /home/vscode \
+    && chmod +x /home/vscode/scripts/tmux-cht.sh
 
 WORKDIR /workspace
 
