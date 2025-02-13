@@ -45,7 +45,7 @@ if [ "${USERNAME}" = "auto" ] || [ "${USERNAME}" = "automatic" ]; then
         USERNAME=vscode
     fi
 elif [ "${USERNAME}" = "none" ]; then
-    USERNAME=root
+    USERNAME=roo
     USER_UID=0
     USER_GID=0
 fi
