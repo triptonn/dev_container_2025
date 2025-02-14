@@ -59,7 +59,7 @@ COPY ./scripts/tmux-cht.sh /home/vscode/.scripts/tmux-cht.sh
 COPY ./scripts/tmux-sessionizer /home/vscode/.scripts/tmux-sessionizer
 
 RUN chown -R vscode:vscode /home/vscode \
-    && chmod +x /home/vscode/scripts/tmux-cht.sh
+    && chmod +x /home/vscode/.scripts/tmux-cht.sh
 
 WORKDIR /workspace
 
