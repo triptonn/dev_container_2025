@@ -1,10 +1,12 @@
-#!/usr/bin/env bash
+#!/bin/bash
 #-------------------------------------------------------------------------------------------------------------
 # Copyright (c) Microsoft Corporation. All rights reserved.
+# Copyright (c) 2025 Nicolas Selig
+#
 # Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
 #-------------------------------------------------------------------------------------------------------------
 #
-# Docs: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/common.md
+# Docs: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/node.md
 # Maintainer: The VS Code and Codespaces Teams
 #
 # Syntax: ./common-debian.sh [install zsh flag] [username] [user UID] [user GID] [upgrade packages flag] [install Oh My Zsh! flag] [Add non-free packages]

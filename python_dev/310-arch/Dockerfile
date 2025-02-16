@@ -1,3 +1,14 @@
+#!/usr/bin/bash
+#-------------------------------------------------------------------------------------------------------------
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Copyright (c) 2025 Nicolas Selig
+#
+# Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
+#-------------------------------------------------------------------------------------------------------------
+#
+# Docs: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/node.md
+# Maintainer: The VS Code and Codespaces Teams
+
 FROM archlinux:latest
 
 COPY ./library-scripts/*.sh ./library-scripts/*.env /tmp/library-scripts/
@@ -8,14 +19,14 @@ ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-RUN pacman -Yu \
-    && bash /tmp/library-scripts/common-arch.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true"
+RUN pacman -Syu --noconfirm
+RUN bash /tmp/library-scripts/common-arch.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true"
     # TODO: Clean after pacman
 
 ENV PIPX_HOME=/usr/local/py-utils \
     PIPX_BIN_DIR=/usr/local/py-utils/bin
 ENV PATH=${PATH}:${PIPX_BIN_DIR}
-RUN bash /tmp/library-scripts/python-arch.sh "none" "/usr/local" "${PIPX_HOME}" "${USERNAME}"
+RUN bash /tmp/library-scripts/python-arch.sh "none" "/usr/bin" "${PIPX_HOME}" "${USERNAME}"
     # TODO: Clean after pacman
 
 ARG NODE_VERSION="none"
@@ -28,15 +39,20 @@ RUN bash /tmp/library-scripts/node-arch.sh "${NVM_DIR}" "${NODE_VERSION}" "${USE
 # Remove library scripts for final image
 RUN rm -rf /tmp/library-scripts
 
-COPY ./dotfiles/.tmux.conf /home/vscode/.tmux.conf
-COPY ./dotfiles/.zshrc /home/vscode/.zshrc
-COPY ./dotfiles/tmux-cht-command /home/vscode/tmux-cht-command
-COPY ./dotfiles/tmux-cht-languages /home/vscode/tmux-cht-languages
-COPY ./scripts/tmux-cht.sh /home/vscode/.scripts/tmux-cht.sh
-COPY ./scripts/tmux-sessionizer /home/vscode/.scripts/tmux-sessionizer
+# Remove default config files before copying your own
+RUN rm /home/"${USERNAME}"/.bshrc && rm /home/"${USERNAMER}"/.zshrc
 
-RUN chown -R vscode:vscode /home/vscode \
-    && chmod +x /home/vscode/.scripts/tmux-cht.sh
+# Create config directories
+RUN mkdir /home/"${USERNAME}"/.tmux /home/"${USERNAME}"/.scripts
+
+# Copy own config files
+COPY ./scripts/.zshrc ./scripts/.bashrc ./scripts/.tmux.conf /home/"${USERNAME}"/
+COPY ./scripts/tmux-cht-command ./scripts/tmux-cht-languages /home/"${USERNAME}"/.tmux/
+COPY ./scripts/tmux-cht.sh ./scripts/tmux-sessionizer /home/"${USERNAME}"/.scripts/
+COPY ./scripts/nvim /home/"${USERNAME}"/.config/nvim
+
+RUN chown -R "${USERNAME}":"${USERNAME}" /home/"${USERNAME}" \
+    && chmod +x /home/"${USERNAME}"/.scripts/tmux-cht.sh
 
 WORKDIR /workspace
 

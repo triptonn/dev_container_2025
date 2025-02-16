@@ -1,4 +1,13 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
+#-------------------------------------------------------------------------------------------------------------
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Copyright (c) 2025 Nicolas Selig
+#
+# Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
+#-------------------------------------------------------------------------------------------------------------
+#
+# Docs: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/node.md
+# Maintainer: The VS Code and Codespaces Teams
 
 set -e
 
@@ -8,6 +17,7 @@ USER_UID=${3:-"automatic"}
 USER_GID=${4:-"automatic"}
 UPGRADE_PACKAGES=${5:-"true"}
 INSTALL_OH_MYS=${6:-"true"}
+# shellcheck disable=SC2034
 ADD_NON_FREE_PACKAGES=${7:-"false"}
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MARKER_FILE="/usr/local/etc/vscode-dev-containers/common"
@@ -17,12 +27,12 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-rm -f /etc/profile.d/00-restore-env.sh
-echo "export PATH=${PATH//$(sh -lc 'echo $PATH')/\$PATH}" > /etc/profile.d/00-restore-env.sh
-chmod +x /ect/profile.d/00-restore-env.sh
+# rm -f /etc/profile.d/00-restore-env.sh
+# echo "export PATH=${PATH//$(sh -lc 'echo $PATH')/\$PATH}" > /etc/profile.d/00-restore-env.sh
+# chmod +x /ect/profile.d/00-restore-env.sh
 
 if [ "${USERNAME}" = "auto" ] || [ "${USERNAME}" = "automatic" ]; then
-    USERNAME = ""
+    USERNAME=""
     POSSIBLE_USERS=("vscode" "node" "codespace" "$(awk -v val=1000 -F ":" '$3==val{print $1}' /etc/passwd)")
     for CURRENT_USER in "${POSSIBLE_USERS[@]}"; do
         if id -u "${CURRENT_USER}" > /dev/null 2>&1; then
@@ -43,16 +53,15 @@ if [ -f "${MARKER_FILE}" ]; then
     echo "Marker fiel found:"
     cat "${MARKER_FILE}"
 
+    # shellcheck disable=SC1090
     source "${MARKER_FILE}"
 fi
 
-if ["${PACKAGES_ALREADY_INSTALLED}" != "true" ]; then
-    package_list="openssh-client \
-    gnupg2 \
-    gpg \
-    dirmngr \
+if [ "${PACKAGES_ALREADY_INSTALLED}" != "true" ]; then
+    package_list="openssh \
+    gnupg \
     iproute2 \
-    procps \
+    procps-ng \
     lsof \
     htop \
     net-tools \
@@ -65,33 +74,29 @@ if ["${PACKAGES_ALREADY_INSTALLED}" != "true" ]; then
     zip \
     neovim \
     tmux \
-    fzf \
     fd \
     zoxide \
     bat \
     thefuck \
     less \
+    xmlsec \
+    sqlite \
     jq \
-    lsb-release \
     dialog \
-    libc6 \
-    libgcc1 \
-    libkrb5-3 \
-    libgssapi-krb5-2 \
-    libicu[0-9][0-9] \
-    liblttng-ust[0-9] \
-    libstdc++6 \
-    zlib1g \
-    locales \
+    glibc \
+    krb5 \
+    icu \
+    lttng-ust \
+    zlib \
     sudo \
     ncdu \
     man-db \
-    strace \
-    init-system-helpers"
+    strace"
 
     echo "Packages to verify are installed: ${package_list}"
 
-    pacman -Sy --noconfirm ${package_list} 2> >( grep -v 'some test output' >&2 )
+    # shellcheck disable=SC2086
+    pacman -Syu --noconfirm ${package_list} 2> >( grep -v 'some test output' >&2 )
 
     if ! type git > /dev/null 2>&1; then
         pacman -S --noconfirm git
@@ -150,15 +155,15 @@ else
     user_rc_path="/home/${USERNAME}"
 fi
 
-# Restore user .bashrc defaults from skeleton file if it doesn't exist or is empty
-if [ ! -f "${user_rc_path}/.bashrc" ] || [ ! -s "${user_rc_path}/.bashrc" ]; then
-    cp /ect/skel/.bashrc "${user_rc_path}/.bashrc"
-fi
+# # Restore user .bashrc defaults from skeleton file if it doesn't exist or is empty
+# if [ ! -f "${user_rc_path}/.bashrc" ] || [ ! -s "${user_rc_path}/.bashrc" ]; then
+#     cp /ect/skel/.bashrc "${user_rc_path}/.bashrc"
+# fi
 
-# Restore user .profile defaults from skeleton file if it doesn't exist or is empty
-if [ ! -f "${user_rc_path}/.profile" ] || [ ! -s "${user_rc_path}/.profile" ]; then
-    cp /etc/skel/.profile "${user_rc_path}/.profile"
-fi
+# # Restore user .profile defaults from skeleton file if it doesn't exist or is empty
+# if [ ! -f "${user_rc_path}/.profile" ] || [ ! -s "${user_rc_path}/.profile" ]; then
+#     cp /etc/skel/.profile "${user_rc_path}/.profile"
+# fi
 
 # .bashrc/.zshrc snippet
 rc_snippet="$(cat << 'EOF'
@@ -296,8 +301,8 @@ fi
 # Optionally install and configure zsh and Oh My Zsh!
 if [ "${INSTALL_ZSH}" = "true" ]; then
     if ! type zsh > /dev/null 2>&1; then
-        pacman -Syu
-        pacman -S zsh
+        pacman -Syu --noconfirm
+        pacman -S --noconfirm zsh
     fi
     if [ "${ZSH_ALREADY_INSTALLED}" != "true" ]; then
         echo "${rc_snippet}" >> /etc/zsh/zshrc
