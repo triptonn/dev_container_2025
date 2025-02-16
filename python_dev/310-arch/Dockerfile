@@ -55,7 +55,7 @@ RUN chmod +x /home/"${USERNAME}"/.scripts/tmux-cht.sh /home/"${USERNAME}"/.confi
 
 USER "${USERNAME}"
 SHELL [ "/usr/bin/zsh" ]
-VOLUME [ "/workspace" ]
-WORKDIR /workspace
+VOLUME [ "/workspaces" ]
+WORKDIR /workspaces
 
 CMD ["tail", "-f", "/dev/null"]
