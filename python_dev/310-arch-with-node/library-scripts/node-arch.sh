@@ -80,15 +80,16 @@ check_packages() {
 # export DEBIAN_FRONTEND=noninteractive
 
 # Install dependencies
-check_packages curl ca-certificates tar gnupg dirmngr
+check_packages curl ca-certificates tar gnupg
 
 # Install yarn
 if type yarn > /dev/null 2>&1; then
     echo "Yarn already installed."
 else
     # Import key safely (new method rather than deprecated apt-key approach) and install
-    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor > /usr/share/keyrings/yarn-archive-keyring.gpg
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
+    # curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor > /usr/share/keyrings/yarn-archive-keyring.gpg
+    # echo "deb [arch=$(uname -m) signed-by=/usr/share/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
+    echo "Installing yarn package..."
     pacman -Syu --noconfirm
     pacman -S --noconfirm yarn
 fi
@@ -155,15 +156,16 @@ if [ "${INSTALL_TOOLS_FOR_NODE_GYP}" = "true" ]; then
     if ! type gcc > /dev/null 2>&1; then
         to_install="${to_install} gcc"
     fi
-    if ! type g++ > /dev/null 2>&1; then
-        to_install="${to_install} g++"
-    fi
-    if ! type python3 > /dev/null 2>&1; then
-        to_install="${to_install} python3-minimal"
+    # if ! type g++ > /dev/null 2>&1; then
+    #     to_install="${to_install} g++"
+    # fi
+    if ! type python > /dev/null 2>&1; then
+        to_install="${to_install} python"
     fi
     if [ -n "${to_install}" ]; then
         update_pacman_if_needed
-        pacman -S --noconfirm "${to_install}"
+        # shellcheck disable=SC2086
+        pacman -S --noconfirm ${to_install}
     fi
 fi
 

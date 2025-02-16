@@ -1,3 +1,4 @@
+#!/bin/zsh
 # The MIT License (MIT)
 #
 # Copyright (c) 2024 Junegunn Choi
@@ -313,7 +314,7 @@ if [[ -n "${BASH_VERSION:-}" ]]; then
 elif [[ -n "${ZSH_VERSION:-}" ]]; then
   __fzf_git_join() {
     local item
-    while read item; do
+    while read -r item; do
       echo -n "${(q)item} "
     done
   }
