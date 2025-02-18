@@ -24,17 +24,11 @@ return {
 
 		mason_lspconfig.setup({
 			ensure_installed = {
-				"harper_ls",
 			},
 		})
 
 		mason_tool_installer.setup({
 			ensure_installed = {
-				"isort",
-				"black",
-				"pylint",
-				"python-lsp-server",
-				"sqlfluff",
 			},
 		})
 	end,
