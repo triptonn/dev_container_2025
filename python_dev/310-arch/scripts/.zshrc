@@ -1,6 +1,6 @@
-ZSH="/home/vscode/.oh-my-zsh/"
-export ZSH="/home/vscode/.oh-my-zsh/"
-ZSH_THEME="robbyrussell"
+ZSH="/usr/share/oh-my-zsh/"
+export ZSH="/usr/share/oh-my-zsh/"
+ZSH_THEME="shibby"
 plugins=(
   git
   zsh-completions
@@ -18,29 +18,87 @@ source "$ZSH"/oh-my-zsh.sh
 path+=("$HOME/.local/bin/")
 export PATH
 
+# export GPG Signing key(?)
+export GPG_TTY=$(tty)
 # editor environment
 export EDITOR='nvim'
 
 # Shell stuff
-alias update="pacman -Syu"
+alias update="yay -Syu"
 
 # Virtual Environment
 alias makevenv="sudo python3 -m venv .venv"
 alias .venv="source .venv/bin/activate"
 
+# Display settings profiles
+alias threeMonitors="autorandr -l three_monitor_home; killall -q polybar; ~/.config/polybar/launch.sh"
+
+# Mounting
+alias mountbackup="sudo mount -o rw,user,uid=1000,umask=007,exec --onlyonce PARTUUID=e8900690-03 $HOME/BackupHDD"
+alias mountdefault="sudo mount -o rw,user,uid=1000,umask=007,exec --onlyonce PARTUUID=e8900690-01 $HOME/old_boot_partition"
+alias mountplaystation="sudo mount -o rw,user,exec --onlyonce PARTUUID=e8900690-02 $HOME/PlaystationHDD"
+alias mountdata="sudo mount -o rw,user,exec --onlyonce UUID=963b910b-11eb-48da-89f1-a96837e08d65 $HOME/DataSSD"
+alias mountdataf="sudo mount -o rw,user,exec --onlyonce UUID=371d8a28-bcbc-4efb-a715-3884851826dd $HOME/DataNVME"
+alias mountwindows="sudo mount -o rw,user,uid=1000,umask=007,exec --onlyonce UUID=0F76318F6A366E58 $HOME/WindowsSSD"
+
+# AUR - yay
+alias yeet="yay -Rn"
+alias yeeet="yay -Rns"
+alias yeet_useless="yay -Rns $(yay -Qtdq)"
+
+# Snipping tool escrotum
+alias sp="escrotum -s -C"
+alias ss="escrotum -s"
+
+# Shortcuts for VSCode
+alias scode="sudo code --no-sandbox"
+
+# docker
+alias da="docker attach"
+alias db="docker build"
+
+
 # cht.sh
-alias languages="nvim $HOME/.tmux/tmux-cht-languages"
-alias commands="nvim $HOME/.tmux/tmux-cht-command"
+alias languages="nvim $HOME/.dotfiles/tmux/.tmux/tmux-cht-languages"
+alias commands="nvim $HOME/.dotfiles/tmux/.tmux/tmux-cht-command"
 
 # tmux config
-alias tmuxconf="nvim $HOME/.tmux.conf"
+alias tmuxconf="nvim $HOME/.dotfiles/tmux/.tmux.conf"
 
 # tmux standard sessions
-alias tmux-main="tmux new -s main"
+alias tmux-left="tmux -2 new -s leftyLeft"
+alias tmux-main="tmux -2 new -s main"
+alias tmux-right="tmux -2 new -s rightyRight"
+
+# i3 and Polybar config shortcut
+alias i3conf="nvim $HOME/.dotfiles/i3/.config/i3/config"
+alias polybarconf="nvim $HOME/.dotfiles/polybar/.config/polybar/config.ini"
 
 # shell config shortcuts
-alias zshrc="nvim $HOME/.zshrc"
-alias bshrc="nvim $HOME/.bashrc"
+alias zshrc="nvim $HOME/.dotfiles/zsh/.zshrc"
+alias bashrc="nvim $HOME/.dotfiles/bash/.bashrc"
+
+# bluetooth
+alias kh="systemctl start bluetooth.service; sudo bluetoothctl connect 00:1B:66:06:01:FF"
+
+# ssh to pi
+alias pi="ssh quacksalber@192.168.178.39"
+
+# sound
+alias sd="pavucontrol"
+alias sdmin="xdotool search --class pavucontrol windowunmap"
+alias sdmax="xdotool search --class pavucontrol windowmap"
+
+# droidcam
+alias dcam="droidcam -dev=/dev/video0 -size=1280x720 &"
+
+# Huion Tablet
+alias tablet="/usr/lib/huiontablet/huiontablet.sh &"
+alias huionmin="xdotool search --class huiontablet windowunmap"
+alias huionmax="xdotool search --class huiontablet windowmap"
+
+# Obsidian
+alias obsidian="sudo obsidian --no-sandbox"
 
 # git
 alias g="git"
@@ -69,6 +127,10 @@ alias lf="ls -lF"
 alias la="ls -alF"
 alias h="history|grep"
 alias c="clear" # I know about ctrl l etc.
+alias p=pwd
+alias logout="killall -KILL -u $USER"
+alias files="dolphin"
+alias files.="dolphin ."
 alias help="cat ~/.zshrc | less"
 
 # cd
@@ -106,8 +168,18 @@ export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${
 
 # -- Use fd instead of fzf --
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+tmux_open_widget() {
+  $HOME/.scripts/tmux-open.sh
+  zle reset-prompt
+}
+zle -N tmux_open_widget
+
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
+export FZF_CTRL_T_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
+
+# Then bind your tmux-open widget to a different key
+bindkey '^Y' tmux_open_widget  # Example: Using Ctrl+Y instead
 
 # Use fd (https://github.com/sharkdp/fd) for listing path candidates.
 # - The first argument to the function ($1) is the base path to start traversal
@@ -140,6 +212,8 @@ _fzf_comprun() {
     rm)           fzf --preview "head -200; else bat -n --color= always --line-range :500 {}; fi" "$@" ;;
     export|unset) fzf --preview "eval 'echo \${}'"                                                "$@" ;;
     ssh)          fzf --preview "dig {}"                                                          "$@" ;;
+    # docker is WIP
+    docker)       fzf --preview "docker inspect {}"                                               "$@" ;;
     kill)         fzf --preview "ps -f -p {}"                                                     "$@" ;;
     *)            fzf --preview "$show_file_or_dir_preview"                                       "$@" ;;
   esac
@@ -160,3 +234,4 @@ eval $(thefuck --alias fk)
 
 # ---- Zoxide (better cd) ----
 eval "$(zoxide init --cmd cd zsh)"
+

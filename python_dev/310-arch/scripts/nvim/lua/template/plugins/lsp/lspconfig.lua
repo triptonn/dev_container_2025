@@ -50,10 +50,10 @@ return {
 				keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
 
 				opts.desc = "Go to previous diagnostic"
-				keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+				keymap.set("n", "(d", vim.diagnostic.goto_prev, opts)
 
 				opts.desc = "Go to next diagnostic"
-				keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+				keymap.set("n", ")d", vim.diagnostic.goto_next, opts)
 
 				opts.desc = "Show documentation for what is under cursor"
 				keymap.set("n", "K", vim.lsp.buf.hover, opts)
@@ -72,11 +72,11 @@ return {
 		end
 
 		mason_lspconfig.setup_handlers({
-			function(server_name)
-				lspconfig[server_name].setup({
-					capabilities = capabilities,
-				})
-			end,
+			-- function(server_name)
+			-- 	lspconfig[server_name].setup({
+			-- 		capabilities = capabilities,
+			-- 	})
+			-- end,
 
 			["lua_ls"] = function()
 				lspconfig["lua_ls"].setup({
@@ -97,7 +97,15 @@ return {
 				lspconfig["ast_grep"].setup({
 					capabilities = capabilities,
 					settings = {
-						Cpp = {
+						cpp = {
+							diagnostics = {
+								globals = { "vim" },
+							},
+							completion = {
+								callSnippet = "Replace",
+							},
+						},
+						dart = {
 							diagnostics = {
 								globals = { "vim" },
 							},
