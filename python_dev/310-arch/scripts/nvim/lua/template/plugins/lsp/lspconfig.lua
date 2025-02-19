@@ -77,6 +77,7 @@ return {
 			-- 		capabilities = capabilities,
 			-- 	})
 			-- end,
+
 			["lua_ls"] = function()
 				lspconfig["lua_ls"].setup({
 					capabilities = capabilities,
@@ -96,7 +97,7 @@ return {
 				lspconfig["pylsp"].setup({
 					capabilities = capabilities,
 					settings = {
-						Lua = {
+						python = {
 							diagnostics = {
 								globals = { "vim" },
 							},
