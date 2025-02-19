@@ -49,6 +49,7 @@ COPY ./scripts/tmux-cht-command ./scripts/tmux-cht-languages /home/"${USERNAME}"
 COPY ./scripts/tmux-cht.sh ./scripts/tmux-sessionizer /home/"${USERNAME}"/.scripts/
 COPY ./scripts/nvim /home/"${USERNAME}"/.config/nvim
 COPY ./scripts/fzf-git.sh /home/"${USERNAME}"/.config/fzf-git/fzf-git.sh
+COPY ./scripts/shibby.zsh-theme /home/"${USERNAME}"/.oh-my-zsh/themes/shibby.zsh-theme
 
 RUN chown -R "${USERNAME}":"${USERNAME}" /home/"${USERNAME}"
 RUN chmod +x /home/"${USERNAME}"/.scripts/tmux-cht.sh /home/"${USERNAME}"/.config/fzf-git/fzf-git.sh

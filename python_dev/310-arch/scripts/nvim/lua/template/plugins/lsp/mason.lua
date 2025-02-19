@@ -24,28 +24,11 @@ return {
 
 		mason_lspconfig.setup({
 			ensure_installed = {
-				"clangd",
-				"cmake",
-				"ast_grep",
-				"jsonls",
-				"harper_ls",
-				"lemminx",
-				"hydra_lsp",
 			},
 		})
 
 		mason_tool_installer.setup({
 			ensure_installed = {
-				"prettier",
-				"stylua",
-				"isort",
-				"black",
-				"pylint",
-				"cmakelint",
-				"cpplint",
-				"jsonlint",
-				"luacheck",
-				"sqlfluff",
 			},
 		})
 	end,
