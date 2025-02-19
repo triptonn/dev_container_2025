@@ -54,6 +54,7 @@ if [ "${PACKAGES_ALREADY_INSTALLED}" != "true" ]; then
     yazi \
     go \
     ttf-sourcecodepro-nerd \
+    luarocks \
     sudo"
 
     echo "Packages to verify are installed: ${package_list}"

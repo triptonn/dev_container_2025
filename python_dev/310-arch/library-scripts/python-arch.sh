@@ -9,6 +9,8 @@
 # Docs: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/node.md
 # Maintainer: The VS Code and Codespaces Teams
 
+set -e
+
 USERNAME=${1:-"automatic"}
 PIPX_HOME=${2:-"/usr/local/py-utils"}
 PIPX_BIN_DIR=${3:-"/usr/local/py-utils/bin"}

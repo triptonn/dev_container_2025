@@ -77,8 +77,7 @@ return {
 			-- 		capabilities = capabilities,
 			-- 	})
 			-- end,
-
-			--[[ ["lua_ls"] = function()
+			["lua_ls"] = function()
 				lspconfig["lua_ls"].setup({
 					capabilities = capabilities,
 					settings = {
@@ -93,7 +92,22 @@ return {
 					},
 				})
 			end,
-			["ast_grep"] = function()
+			["pylsp"] = function()
+				lspconfig["pylsp"].setup({
+					capabilities = capabilities,
+					settings = {
+						Lua = {
+							diagnostics = {
+								globals = { "vim" },
+							},
+							completion = {
+								callSnippet = "Replace",
+							},
+						},
+					},
+				})
+			end,
+			--[[ ["ast_grep"] = function()
 				lspconfig["ast_grep"].setup({
 					capabilities = capabilities,
 					settings = {
