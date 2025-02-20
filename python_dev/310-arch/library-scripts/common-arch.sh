@@ -50,6 +50,7 @@ if [ "${PACKAGES_ALREADY_INSTALLED}" != "true" ]; then
     eza \
     zoxide \
     bat \
+    ripgrep \
     thefuck \
     yazi \
     go \
