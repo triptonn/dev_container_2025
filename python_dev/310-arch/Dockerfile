@@ -46,7 +46,7 @@ RUN mkdir /home/"${USERNAME}"/.scripts /home/"${USERNAME}"/fzf-git
 # Copy own config files
 COPY ./scripts/.tmux.conf /home/"${USERNAME}"/
 COPY ./scripts/tmux-cht-command ./scripts/tmux-cht-languages /home/"${USERNAME}"/.tmux/
-COPY ./scripts/tmux-cht.sh ./scripts/tmux-sessionizer ./tmux-open.sh /home/"${USERNAME}"/.scripts/
+COPY ./scripts/tmux-cht.sh ./scripts/tmux-sessionizer ./scripts/tmux-open.sh /home/"${USERNAME}"/.scripts/
 COPY ./scripts/nvim /home/"${USERNAME}"/.config/nvim
 COPY ./scripts/fzf-git.sh /home/"${USERNAME}"/.config/fzf-git/fzf-git.sh
 COPY ./scripts/shibby.zsh-theme /home/"${USERNAME}"/.oh-my-zsh/themes/shibby.zsh-theme
