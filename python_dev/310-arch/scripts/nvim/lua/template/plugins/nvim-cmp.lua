@@ -7,7 +7,7 @@ return {
 		{
 			"L3MON4D3/LuaSnip",
 			-- follow latest release
-			version = "v2.*",
+			version = "v2.3.0",
 			-- install jsregexp
 			build = "make install_jsregexp",
 		},
@@ -29,7 +29,7 @@ return {
 				completeopt = "menu,menuone,preview,noselect",
 			},
 			snippet = {
-				expand = function()
+				expand = function(args)
 					luasnip.lsp_expand(args.body)
 				end,
 			},
@@ -44,13 +44,15 @@ return {
 			}),
 			-- sources for autocompletion
 			sources = cmp.config.sources({
-				{ name = "nvim_lsp" },
+				{ name = "nvim_lua" },
 				{ name = "luasnip" }, -- snippets
 				{ name = "buffer" }, -- text within current buffer
 				{ name = "path" }, -- filesystem paths
 			}),
 			-- Configure lspkind for vs-code like pictograms in completion menu
 			formatting = {
+				fields = {},
+				expandable_indicator = true,
 				format = lspkind.cmp_format({
 					maxwidth = 50,
 					ellipsis_char = "...",

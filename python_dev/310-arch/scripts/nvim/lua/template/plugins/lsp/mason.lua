@@ -23,13 +23,12 @@ return {
 		})
 
 		mason_lspconfig.setup({
-			ensure_installed = {
-			},
+			automatic_installation = true,
+			ensure_installed = {},
 		})
 
 		mason_tool_installer.setup({
-			ensure_installed = {
-			},
+			ensure_installed = {},
 		})
 	end,
 }

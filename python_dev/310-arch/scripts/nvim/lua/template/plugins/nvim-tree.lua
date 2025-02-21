@@ -13,7 +13,20 @@ return {
 				width = 55,
 				relativenumber = true,
 				side = "right",
+				float = {
+					enable = true,
+					quit_on_focus_loss = true,
+					open_win_config = {
+						relative = "cursor",
+						border = "rounded",
+						width = 40,
+						height = 30,
+						row = 1,
+						col = 1,
+					},
+				},
 			},
+
 			-- change folder arrow icons
 			renderer = {
 				indent_markers = {

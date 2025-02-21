@@ -5,13 +5,14 @@ return {
 		local lint = require("lint")
 		lint.linters_by_ft = {
 			python = { "pylint" },
-			cmake = { "cmakelint" },
-			cpp = { "cpplint" },
-			json = { "jsonlint" },
+			--cmake = { "cmakelint" },
+			--cpp = { "cpplint" },
+			--json = { "jsonlint" },
 			lua = { "luacheck" },
 		}
 
 		lint.linters.luacheck = {
+			name = "luacheck",
 			cmd = "luacheck",
 			stdin = true,
 			args = {

@@ -9,6 +9,11 @@ return {
 	opts = {
 		servers = {
 			dartls = {},
+			lua_ls = {},
+			pylsp = {},
+			bashls = {},
+			dockerls = {},
+			docker_compose_language_server = {},
 		},
 	},
 	config = function()

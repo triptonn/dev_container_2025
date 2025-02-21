@@ -116,24 +116,6 @@ if [ "${USERNAME}" != "root" ] && [ "${EXISTING_NON_ROOT_USER}" != "${USERNAME}"
     EXISTING_NON_ROOT_USER="${USERNAME}"
 fi
 
-# if [ "${INSTALL_YAY}" != "true" ]; then
-#     echo "Cloning yay repository..."
-#     cd /home/"${USERNAME}"
-#     git clone https://aur.archlinux.org/yay.git
-#     chown -R "${USERNAME}":"${USERNAME}" /home/"${USERNAME}"
-#     cd yay
-#     echo "Make yay..."
-#     sudo -u "${USERNAME}" makepkg -si --noconfirm
-
-#     INSTALL_YAY="true"
-# fi
-
-# if [ "${INSTALL_FZF_GIT}" != "true" ]; then
-#     echo "Installing fzf-git..."
-#     yay -Syu --noconfirm fzf-git
-#     INSTALL_FZF_GIT="true"
-# fi
-
 # Shell customization section
 if [ "${USERNAME}" = "root" ]; then
     user_rc_path="/root"
@@ -260,26 +242,6 @@ if [ "${INSTALL_ZSH}" = "true" ]; then
         echo "${rc_snippet}" >> /etc/zsh/zshrc
         ZSH_ALREADY_INSTALLED="true"
     fi
-
-    # Adapted, simplified inline Oh My Zsh! install steps that adds, defaults to a codespaces theme.
-    # See https://github.com/ohmyzsh/ohmyzsh/blob/master/tools/install.sh for official script.
-    # oh_my_install_dir="${user_rc_path}/.oh-my-zsh"
-    # if [ ! -d "${oh_my_install_dir}" ] && [ "${INSTALL_OH_MYS}" = "true" ]; then
-    #     template_path="${oh_my_install_dir}/templates/zshrc.zsh-template"
-    #     user_rc_file="${user_rc_path}/.zshrc"
-    #     umask g-w,o-w
-    #     mkdir -p "${oh_my_install_dir}"
-    #     git clone --depth=1 \
-    #         -c core.eol=lf \
-    #         -c core.autocrlf=false \
-    #         -c fsck.zeroPaddedFilemode=ignore \
-    #         -c fetch.fsck.zeroPaddedFilemode=ignore \
-    #         -c receive.fsck.zeroPaddedFilemode=ignore \
-    #         "https://github.com/ohmyzsh/ohmyzsh" "${oh_my_install_dir}" 2>&1
-    #     echo -e "$(cat "${template_path}")\nDISABLE_AUTO_UPDATE=true\nDISABLE_UPDATE_PROMPT=true" > "${user_rc_file}"
-    #     sed -i -e 's/ZSH_THEME=.*/ZSH_THEME="codespaces"/g' "${user_rc_file}"
-
-    #     mkdir -p "${oh_my_install_dir}"/custom/themes
 
     # Install oh-my-zsh
     if [ "${OHMYZSH_INSTALLED}" != "true" ]; then

@@ -18,6 +18,9 @@ source "$ZSH"/oh-my-zsh.sh
 path+=("$HOME/.local/bin/")
 export PATH
 
+# export GPG Signing key(?)
+export GPG_TTY=$(tty)
+
 # editor environment
 export EDITOR='nvim'
 
@@ -26,19 +29,15 @@ alias makevenv="sudo python3 -m venv .venv"
 alias .venv="source .venv/bin/activate"
 
 # cht.sh
-alias languages="nvim $HOME/.tmux/tmux-cht-languages"
-alias commands="nvim $HOME/.tmux/tmux-cht-command"
+alias languages="nvim $HOME/.dotfiles/tmux/.tmux/tmux-cht-languages"
+alias commands="nvim $HOME/.dotfiles/tmux/.tmux/tmux-cht-command"
 
 # tmux config
-alias tmuxconf="nvim $HOME/.tmux.conf"
+alias tmuxconf="nvim $HOME/.dotfiles/tmux/.tmux.conf"
 
 # tmux standard sessions
 alias tmux="tmux -2"
 alias tmux-main="tmux -2 new -s main"
-
-# shell config shortcuts
-alias zshrc="nvim $HOME/.zshrc"
-alias bashrc="nvim $HOME/.bashrc"
 
 # other
 alias lsb="ls -latrh"
@@ -47,7 +46,6 @@ alias la="ls -alF"
 alias h="history|grep"
 alias c="clear" # I know about ctrl l etc.
 alias p=pwd
-alias logout="killall -KILL -u $USER"
 alias help="cat ~/.zshrc | less"
 
 # cd
@@ -129,7 +127,6 @@ _fzf_comprun() {
     rm)           fzf --preview "head -200; else bat -n --color= always --line-range :500 {}; fi" "$@" ;;
     export|unset) fzf --preview "eval 'echo \${}'"                                                "$@" ;;
     ssh)          fzf --preview "dig {}"                                                          "$@" ;;
-    # docker is WIP
     kill)         fzf --preview "ps -f -p {}"                                                     "$@" ;;
     *)            fzf --preview "$show_file_or_dir_preview"                                       "$@" ;;
   esac

@@ -6,9 +6,6 @@ return {
 
 		conform.setup({
 			formatters_by_ft = {
-				html = { "prettier" },
-				json = { "prettier" },
-				yaml = { "prettier" },
 				lua = { "stylua" },
 				python = { "isort", "black" },
 			},
