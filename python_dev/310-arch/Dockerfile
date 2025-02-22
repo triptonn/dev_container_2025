@@ -50,7 +50,7 @@ COPY ./scripts/tmux-cht.sh ./scripts/tmux-sessionizer ./scripts/tmux-open.sh /ho
 COPY ./scripts/nvim /home/"${USERNAME}"/.config/nvim
 COPY ./scripts/fzf-git.sh /home/"${USERNAME}"/.config/fzf-git/fzf-git.sh
 COPY ./scripts/shibby.zsh-theme /home/"${USERNAME}"/.oh-my-zsh/custom/themes/shibby.zsh-theme
-COPY ./scripts/venv-info.zsh ./scripts/venv-info.plugin.zsh /home/${USERNAME}/.oh-my-zsh/custom/plugins/
+COPY ./scripts/venv-info.zsh ./scripts/venv-info.plugin.zsh /home/${USERNAME}/.oh-my-zsh/custom/plugins/venv-info/
 
 RUN chown -R "${USERNAME}":"${USERNAME}" /home/"${USERNAME}"
 RUN chmod +x /home/"${USERNAME}"/.scripts/tmux-cht.sh /home/"${USERNAME}"/.config/fzf-git/fzf-git.sh
