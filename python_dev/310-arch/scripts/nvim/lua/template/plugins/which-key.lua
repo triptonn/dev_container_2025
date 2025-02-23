@@ -3,31 +3,23 @@ return {
 	event = "VeryLazy",
 	init = function()
 		vim.o.timeout = true
-		vim.o.timeoutlen = 500
+		vim.o.timeoutlen = 300
 	end,
 	opts = {
-		---@type false | "classic" | "modern" | "helix"
+		--@type false | "classic" | "modern" | "helix"
 		preset = "helix",
 		-- Delay before showing the popup. Can be a number or a function that returns a number.
 		---@type number | fun(ctx: { keys: string, mode: string, plugin?: string }):number
 		delay = function(ctx)
 			return ctx.plugin and 0 or 200
 		end,
-		---@param mapping wk.Mapping
-		filter = function(mapping)
-			-- example to exclude mappings without a description
-			-- return mapping.desc and mapping.desc ~= ""
-			return true
-		end,
 		--- You can add any mappings here, or use `require('which-key').add()` later
-		---@type wk.Spec
 		spec = {},
 		-- show a warning when issues were detected with your mappings
 		notify = true,
 		-- Which-key automatically sets up triggers for your mappings.
 		-- But you can disable this and setup the triggers manually.
 		-- Check the docs for more info.
-		---@type wk.Spec
 		triggers = {
 			{ "<auto>", mode = "nxso" },
 		},
@@ -44,7 +36,7 @@ return {
 			-- No actual key bindings are created
 			spelling = {
 				enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
-				suggestions = 20, -- how many suggestions should be shown in the list?
+				suggestions = 10, -- how many suggestions should be shown in the list?
 			},
 			presets = {
 				operators = true, -- adds help for operators like d, y, ...
@@ -56,7 +48,6 @@ return {
 				g = true, -- bindings for prefixed with g
 			},
 		},
-		---@type wk.Win.opts
 		win = {
 			-- don't allow the popup to overlap with the cursor
 			no_overlap = true,
@@ -68,10 +59,8 @@ return {
 			-- height = { min = 4, max = 25 },
 			-- col = 0,
 			-- row = math.huge,
-			-- border = "none",
-			padding = { 1, 2 }, -- extra window padding [top/bottom, right/left]
-			title = true,
-			title_pos = "center",
+			border = "none",
+			padding = { 1, 1 }, -- extra window padding [top/bottom, right/left]
 			zindex = 1000,
 			-- Additional vim.wo and vim.bo options
 			-- bo = {},
@@ -80,14 +69,15 @@ return {
 			-- },
 		},
 		layout = {
-			width = { min = 20 }, -- min and max width of the columns
-			spacing = 3, -- spacing between columns
+			height = { min = 3, max = 15 },
+			width = { min = 20, max = 50 }, -- min and max width of the columns
+			spacing = 2, -- spacing between columns
+			align = "center",
 		},
 		keys = {
 			scroll_down = "<c-d>", -- binding to scroll down inside the popup
 			scroll_up = "<c-u>", -- binding to scroll up inside the popup
 		},
-		---@type (string|wk.Sorter)[]
 		--- Mappings are sorted using configured sorters and natural sort of the keys
 		--- Available sorters:
 		--- * local: buffer-local mappings first
@@ -97,14 +87,12 @@ return {
 		--- * mod: special modifier keys last
 		--- * manual: the order the mappings were added
 		--- * case: lower-case first
-		sort = { "local", "order", "group", "alphanum", "mod" },
-		---@type number|fun(node: wk.Node):boolean?
+		-- sort = { "local", "order", "group", "alphanum", "mod" },
 		expand = 0, -- expand groups when <= n mappings
 		-- expand = function(node)
 		--   return not node.desc -- expand all nodes without a description
 		-- end,
 		-- Functions/Lua Patterns for formatting the labels
-		---@type table<string, ({[1]:string, [2]:string}|fun(str:string):string)[]>
 		replace = {
 			key = {
 				function(key)
@@ -123,7 +111,7 @@ return {
 				{ "^:%s*", "" },
 			},
 		},
-		icons = {
+		--[[ icons = {
 			breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
 			separator = "➜", -- symbol used between a key and it's label
 			group = "+", -- symbol prepended to a group
@@ -134,7 +122,6 @@ return {
 			mappings = true,
 			--- See `lua/which-key/icons.lua` for more details
 			--- Set to `false` to disable keymap icons from rules
-			---@type wk.IconRule[]|false
 			rules = {},
 			-- use the highlights from mini.icons
 			-- When `false`, it will use `WhichKeyIcon` instead
@@ -170,9 +157,9 @@ return {
 				F11 = "󱊵",
 				F12 = "󱊶",
 			},
-		},
-		show_help = true, -- show a help message in the command line for using WhichKey
-		show_keys = true, -- show the currently pressed key and its label as a message in the command line
+		}, ]]
+		show_help = false, -- show a help message in the command line for using WhichKey
+		show_keys = false, -- show the currently pressed key and its label as a message in the command line
 		-- disable WhichKey for certain buf types and file types.
 		disable = {
 			ft = {},

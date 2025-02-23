@@ -18,7 +18,7 @@ return {
 					quit_on_focus_loss = true,
 					open_win_config = {
 						relative = "cursor",
-						border = "rounded",
+						border = "none",
 						width = 40,
 						height = 30,
 						row = 1,
