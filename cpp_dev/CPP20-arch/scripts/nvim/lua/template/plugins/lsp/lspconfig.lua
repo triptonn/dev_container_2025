@@ -8,6 +8,7 @@ return {
 	},
 	opts = {
 		servers = {
+			clangd = {},
 			dartls = {},
 			lua_ls = {},
 			pylsp = {},
@@ -169,7 +170,7 @@ return {
 						},
 					},
 				})
-			end,
+			end, ]]
 			["clangd"] = function()
 				lspconfig["clangd"].setup({
 					capabilities = capabilities,
@@ -184,7 +185,7 @@ return {
 						},
 					},
 				})
-			end, ]]
+			end,
 		})
 	end,
 }
