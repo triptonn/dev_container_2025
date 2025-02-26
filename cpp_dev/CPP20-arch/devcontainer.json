@@ -1,0 +1,68 @@
+{
+    "name": "C++ Development",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".",
+        "args": {
+            "VARIANT": "c20-arch"
+        }
+    },
+
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "editor.formatOnSave": true,
+                "C_Cpp.clang_format_style": "file",
+                "C_Cpp.default.cppStandard": "c++20",
+                "C_Cpp.default.cStandard": "c17",
+                "C_Cpp.default.intelliSenseMode": "linux-clang-x64",
+                "cmake.configureOnOpen": true,
+                "cmake.buildDirectory": "${workspaceFolder}/build",
+                "cmake.generator": "Ninja"
+            },
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "twxs.cmake",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-vscode.cpptools-themes",
+                "cschlosser.doxdocgen",
+                "jeff-hykin.better-cpp-syntax",
+                "gruntfuggly.todo-tree",
+                "ms-vscode.hexeditor",
+                "xaver.clang-format",
+                "matepek.vscode-catch2-test-adapter",
+                "llvm-vs-code-extensions.vscode-clangd"
+            ]
+        }
+    },
+
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "latest",
+            "ppa": false
+        }
+    },
+
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "gcc -v",
+
+    // Configure tool-specific properties.
+    // "customizations": {},
+
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+    "remoteUser": "vscode",
+
+    "mounts": [
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+    ],
+
+    "remoteEnv": {
+        "PATH": "${containerEnv:PATH}:/home/vscode/.local/bin",
+        "CC": "/usr/bin/clang",
+        "CXX": "/usr/bin/clang++"
+    }
+}
