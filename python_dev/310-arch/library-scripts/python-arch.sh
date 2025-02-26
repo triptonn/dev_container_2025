@@ -17,7 +17,7 @@ PIPX_BIN_DIR=${3:-"/usr/local/py-utils/bin"}
 
 pacman -Syu --noconfirm
 
-pacman -S --noconfirm python python-pip python-pipx
+pacman -S --noconfirm python python-pip python-pipx python-debugpy
 
 mkdir -p "${PIPX_HOME}"
 chown -R "${USERNAME}:${USERNAME}" "${PIPX_HOME}"
@@ -33,6 +33,7 @@ su "${USERNAME}" -c "$(cat << EOF
     pipx install pycodestyle
     pipx install bandit
     pipx install pytest
+    pipx install dap-python
 EOF
 )"
 

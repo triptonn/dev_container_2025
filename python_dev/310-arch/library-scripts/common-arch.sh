@@ -56,6 +56,7 @@ if [ "${PACKAGES_ALREADY_INSTALLED}" != "true" ]; then
     go \
     ttf-sourcecodepro-nerd \
     luarocks \
+    debugpy \
     sudo"
 
     echo "Packages to verify are installed: ${package_list}"
