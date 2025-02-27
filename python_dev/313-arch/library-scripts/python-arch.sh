@@ -22,6 +22,8 @@ pacman -S --noconfirm python python-pip python-pipx python-debugpy
 mkdir -p "${PIPX_HOME}"
 chown -R "${USERNAME}:${USERNAME}" "${PIPX_HOME}"
 
+# python-dap needs to be installed manually
+
 su "${USERNAME}" -c "$(cat << EOF
     export PIPX_HOME="${PIPX_HOME}"
     export PIPX_BIN_DIR="${PIPX_BIN_DIR}"
@@ -33,7 +35,6 @@ su "${USERNAME}" -c "$(cat << EOF
     pipx install pycodestyle
     pipx install bandit
     pipx install pytest
-    pipx install dap-python
 EOF
 )"
 
