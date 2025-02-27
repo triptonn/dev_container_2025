@@ -27,7 +27,7 @@
     RUN rm -rf /tmp/library-scripts
     
     # Create config directories
-    RUN mkdir /home/"${USERNAME}"/.scripts /home/"${USERNAME}"/.tmux /home/"${USERNAME}"/.config/nvim
+    RUN mkdir /home/"${USERNAME}"/.scripts
     
     # Copy own config files
     COPY ./scripts/.tmux.conf /home/"${USERNAME}"/
@@ -37,6 +37,7 @@
     COPY ./scripts/fzf-git.sh /home/"${USERNAME}"/.config/fzf-git/fzf-git.sh
     COPY ./scripts/shibby.zsh-theme /home/"${USERNAME}"/.oh-my-zsh/custom/themes/shibby.zsh-theme
     COPY ./scripts/.zshrc ./scripts/.bashrc /home/"${USERNAME}"/
+    COPY ./scripts/venv-info.zsh ./scripts/venv-info.plugin.zsh /home/${USERNAME}/.oh-my-zsh/custom/plugins/venv-info/
     
     RUN chown -R "${USERNAME}":"${USERNAME}" /home/"${USERNAME}"
     RUN chmod +x /home/"${USERNAME}"/.scripts/tmux-cht.sh /home/"${USERNAME}"/.scripts/tmux-sessionizer /home/"${USERNAME}"/.scripts/tmux-open.sh
