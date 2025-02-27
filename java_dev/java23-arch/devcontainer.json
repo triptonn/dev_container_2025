@@ -1,0 +1,60 @@
+{
+    "name": "Java Development",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".",
+        "args": {
+            "VARIANT": "java23-arch"
+        }
+    },
+
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "java.jdt.ls.java.home": "/usr/lib/jvm/default",
+                "java.configuration.runtimes": [{
+                    "name": "JavaSE-23",
+                    "path": "/usr/lib/jvm/default",
+                    "default": true
+                }],
+                "java.format.settings.url": ".vscode/java-formatter.xml",
+                "java.format.settings.profile": "GoogleStyle",
+                "editor.formatOnSave": true,
+                "java.completion.importOrder": [
+                    "java",
+                    "javax",
+                    "com",
+                    "org"
+                ]
+            },
+            "extensions": [
+                "vscjava.vscode-java-pack",
+                "redhat.java",
+                "vscjava.vscode-java-debug",
+                "vscjava.vscode-java-test",
+                "vscjava.vscode-maven",
+                "vscjava.vscode-java-dependency",
+                "gruntfuggly.todo-tree"
+            ]
+        }
+    },
+
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "latest",
+            "ppa": false
+        }
+    },
+
+    "remoteUser": "vscode",
+
+    "mounts": [
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.m2,target=/home/vscode/.m2,type=bind,consistency=cached"
+    ],
+
+    "remoteEnv": {
+        "PATH": "${containerEnv:PATH}:/home/vscode/.local/bin",
+        "JAVA_HOME": "/usr/lib/jvm/default"
+    }
+}
