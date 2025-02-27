@@ -1,0 +1,42 @@
+{
+    "name": "Flutter Development",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".",
+        "args": {
+            "VARIANT": "flutter-arch"
+        }
+    },
+
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "dart.flutterSdkPath": "/usr/local/flutter"
+            }
+        }
+    },
+
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "latest",
+            "ppa": false
+        }
+    },
+
+    "remoteUser": "vscode",
+
+    "mounts": [
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+        "source=/dev/bus/usb,target=/dev/bus/usb,type=bind,consistency=cached"
+    ],
+
+    "runArgs": [
+        "--privileged"
+    ],
+
+    "remoteEnv": {
+        "PATH": "${containerEnv:PATH}:/usr/local/flutter/bin"
+    },
+
+    "forwardPorts": [8080]
+}
