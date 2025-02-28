@@ -2,7 +2,7 @@
 PROMPT="$color_prefix"'$(virtualenv_info)$(virtualenv_prompt_info) '"$base_left_prompt$color_suffix"
 RPROMPT="$color_prefix"' $(git_prompt_info) '"$base_right_prompt$color_suffix"
 
-SH_THEME_GIT_PROMPT_PREFIX="( "
+ZSH_THEME_GIT_PROMPT_PREFIX="( "
 ZSH_THEME_GIT_PROMPT_SUFFIX=""
 ZSH_THEME_GIT_PROMPT_DIRTY="* )"
 ZSH_THEME_GIT_PROMPT_CLEAN=" )"

@@ -43,8 +43,21 @@ alias zshrc="nvim $HOME/.zshrc"
 alias bashrc="nvim $HOME/.bashrc"
 
 # C++
-alias grooster="rm grooster; gcc -g -lstdc++ -std=c++20 -pedantic ./*.cpp -o ./grooster -time; timeout 2 ./grooster"
-alias clrooster="rm clrooster; clang++ -g -lstdc++ -std=c++20 -pedantic ./*.cpp -o ./clrooster; timeout 2 ./clrooster"
+function grooster() {
+    local filename=$1
+    local base_name="${filename%.*}"
+    [[ -f "./${base_name}" ]] && rm ${base_name}
+    gcc -g -lstdc++ -std=c++20 -pedantic "${base_name}.cpp" -o ./${base_name} -time
+    timeout 2 ./${base_name}
+}
+
+function clrooster() {
+    local filename=$1
+    local base_name="${filename%.*}"
+    [[ -f "./${base_name}" ]] && rm ${base_name}
+    clang++ -g -lstdc++ -std=c++20 -pedantic "${base_name}.cpp" -o ./${base_name}
+    timeout 2 ./${base_name}
+}
 
 # other
 alias lsb="ls -latrh"
