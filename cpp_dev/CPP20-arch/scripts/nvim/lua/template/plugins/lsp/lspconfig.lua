@@ -90,7 +90,7 @@ return {
 			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 		end ]]
 
-		local default_lsp_config = {
+		--[[ local default_lsp_config = {
 			capabilities = capabilities,
 			flags = {
 				debounce_text_changes = 150, -- Debounce lsp updates
@@ -101,13 +101,13 @@ return {
 					underline = true,
 					severity_sort = true,
 					float = {
-						relative = "curosor",
+						relative = "cursor",
 						border = "rounded",
 						source = false,
 					},
 				}),
 			},
-		}
+		} ]]
 		mason_lspconfig.setup_handlers({
 			function(server_name)
 				lspconfig[server_name].setup({
@@ -117,21 +117,44 @@ return {
 					-- Server specific options can be added here
 				})) ]]
 			end,
-            ["bashls"] = function()
-                lspconfig["bashls"].setup({
-                    capabilities = capabilities,
-                    settings = {
-                        Lua = {
-                            diagnostics = {
-                                globals = { "vim" },
-                            },
-                            completion = {
-                                callSnippet = "Replace",
-                            },
-                        },
-                    },
-                })
-            end,
+			["bashls"] = function()
+				lspconfig["bashls"].setup({
+					capabilities = capabilities,
+					settings = {
+						Lua = {
+							diagnostics = {
+								globals = { "vim" },
+							},
+							completion = {
+								callSnippet = "Replace",
+							},
+						},
+					},
+				})
+			end,
+			["clangd"] = function()
+				lspconfig["clangd"].setup({
+					capabilities = capabilities,
+					settings = {
+						Cpp = {
+							diagnostics = {
+								globals = { "vim" },
+							},
+							completion = {
+								callSnippet = "Replace",
+							},
+						},
+						Hpp = {
+							diagnostics = {
+								globals = { "vim" },
+							},
+							completion = {
+								callSnippet = "Replace",
+							},
+						},
+					},
+				})
+			end,
 			["lua_ls"] = function()
 				lspconfig["lua_ls"].setup({
 					capabilities = capabilities,
@@ -185,21 +208,6 @@ return {
 					},
 				})
 			end, ]]
-			["clangd"] = function()
-				lspconfig["clangd"].setup({
-					capabilities = capabilities,
-					settings = {
-						Cpp = {
-							diagnostics = {
-								globals = { "vim" },
-							},
-							completion = {
-								callSnippet = "Replace",
-							},
-						},
-					},
-				})
-			end,
 		})
 	end,
 }

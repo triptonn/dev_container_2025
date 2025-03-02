@@ -18,7 +18,41 @@ return {
 		},
 	},
 	config = function()
+		local java = require("java").setup()
 		local lspconfig = require("lspconfig")
+
+		local jdtls_setup = lspconfig.jdtls.setup({
+			settings = {
+				java = {
+					configuration = {
+						runtimes = {
+							{
+								name = "JavaSE-23",
+								path = "/opt/jdk-23",
+								default = "true",
+							},
+						},
+						java_test = {
+							enable = true,
+						},
+						java_debug_adapter = {
+							enable = true,
+						},
+						spring_boot_tools = {
+							enable = true,
+						},
+						jdk = {
+							auto_install = true,
+							version = "23.0.2",
+						},
+						notifications = {
+							dap = true,
+						},
+					},
+				},
+			},
+		})
+
 		local mason_lspconfig = require("mason-lspconfig")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 

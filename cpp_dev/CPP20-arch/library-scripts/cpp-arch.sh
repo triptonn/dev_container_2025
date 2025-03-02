@@ -16,6 +16,7 @@ pacman -Syu --noconfirm \
     gcc \
     gdb \
     cmake \
+    catch2 \
     ninja \
     clang \
     llvm \
