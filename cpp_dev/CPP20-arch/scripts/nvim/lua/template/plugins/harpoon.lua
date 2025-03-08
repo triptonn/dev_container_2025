@@ -7,13 +7,33 @@ return {
 
 		harpoon:setup()
 
-		vim.keymap.set("n", "<leader>v", function()
+		vim.keymap.set("n", "<leader>ha", function()
 			harpoon:list():add()
 		end, { desc = "Add file to harpoon" })
+		
+		vim.keymap.set("n", "<leader>hc", function()
+			harpoon:list():clear()
+		end, { desc = "Clear harpoon" })
 
 		vim.keymap.set("n", "<C-e>", function()
 			harpoon.ui:toggle_quick_menu(harpoon:list())
 		end, { desc = "Toggle harpoon quick menu" })
+
+		vim.keymap.set("n", "<leader>hr1", function()
+			harpoon:list():remove_at(1)
+		end, { desc = "Remove 1st harpoon file" })
+
+		vim.keymap.set("n", "<leader>hr2", function()
+			harpoon:list():remove_at(2)
+		end, { desc = "Remove 2nd harpoon file" })
+
+		vim.keymap.set("n", "<leader>hr3", function()
+			harpoon:list():remove_at(3)
+		end, { desc = "Remove 3rd harpoon file" })
+
+		vim.keymap.set("n", "<leader>hr4", function()
+			harpoon:list():remove_at(4)
+		end, { desc = "Remove 4th harpoon file" })
 
 		vim.keymap.set("n", "<A-1>", function()
 			harpoon:list():select(1)
