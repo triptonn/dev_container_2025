@@ -21,15 +21,14 @@ return {
 			formatters_by_ft = {
 				c = { "clang_format" },
 				cpp = { "clang_format" },
-				hpp = { "clang_format" },
 				lua = { "stylua" },
 				python = { "isort", "black" },
 			},
 			formatters = {
-				--black = {},
+				black = {},
 				clang_format = clang_format_config,
-				--isort = {},
-				--stylua = {},
+				isort = {},
+				stylua = {},
 			},
 			format_on_save = format_options,
 		})

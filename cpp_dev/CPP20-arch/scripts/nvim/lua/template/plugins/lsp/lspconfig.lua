@@ -84,11 +84,11 @@ return {
 			},
 		}
 
-		--[[ local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 		for type, icon in pairs(signs) do
 			local hl = "DiagnosticSign" .. type
 			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-		end ]]
+		end
 
 		--[[ local default_lsp_config = {
 			capabilities = capabilities,
@@ -117,6 +117,29 @@ return {
 					-- Server specific options can be added here
 				})) ]]
 			end,
+			--[[ ["ast_grep"] = function()
+				lspconfig["ast_grep"].setup({
+					capabilities = capabilities,
+					settings = {
+						cpp = {
+							diagnostics = {
+								globals = { "vim" },
+							},
+							completion = {
+								callSnippet = "Replace",
+							},
+						},
+						dart = {
+							diagnostics = {
+								globals = { "vim" },
+							},
+							completion = {
+								callSnippet = "Replace",
+							},
+						},
+					},
+				})
+			end, ]]
 			["bashls"] = function()
 				lspconfig["bashls"].setup({
 					capabilities = capabilities,
@@ -137,14 +160,6 @@ return {
 					capabilities = capabilities,
 					settings = {
 						Cpp = {
-							diagnostics = {
-								globals = { "vim" },
-							},
-							completion = {
-								callSnippet = "Replace",
-							},
-						},
-						Hpp = {
 							diagnostics = {
 								globals = { "vim" },
 							},
@@ -185,29 +200,6 @@ return {
 					},
 				})
 			end,
-			--[[ ["ast_grep"] = function()
-				lspconfig["ast_grep"].setup({
-					capabilities = capabilities,
-					settings = {
-						cpp = {
-							diagnostics = {
-								globals = { "vim" },
-							},
-							completion = {
-								callSnippet = "Replace",
-							},
-						},
-						dart = {
-							diagnostics = {
-								globals = { "vim" },
-							},
-							completion = {
-								callSnippet = "Replace",
-							},
-						},
-					},
-				})
-			end, ]]
 		})
 	end,
 }

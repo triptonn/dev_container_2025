@@ -4,9 +4,9 @@ return {
 	config = function()
 		local lint = require("lint")
 		lint.linters_by_ft = {
-			--python = { "pylint" },
+			python = { "pylint" },
 			--cmake = { "cmakelint" },
-			--cpp = { "cpplint" },
+			cpp = { "cpplint" },
 			--json = { "jsonlint" },
 			lua = { "luacheck" },
 		}
