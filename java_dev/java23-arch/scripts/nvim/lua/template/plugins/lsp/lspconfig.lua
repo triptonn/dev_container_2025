@@ -10,6 +10,37 @@ return {
 		servers = {
 			clangd = {},
 			dartls = {},
+			jdtls = {
+				settings = {
+					java = {
+						configuration = {
+							runtimes = {
+								{
+									name = "JavaSE-23",
+									path = "/opt/jdk-23",
+									default = "true",
+								},
+							},
+							java_test = {
+								enable = true,
+							},
+							java_debug_adapter = {
+								enable = true,
+							},
+							spring_boot_tools = {
+								enable = true,
+							},
+							jdk = {
+								auto_install = true,
+								version = "23.0.2",
+							},
+							notifications = {
+								dap = true,
+							},
+						},
+					},
+				},
+			},
 			lua_ls = {},
 			pylsp = {},
 			bashls = {},
@@ -18,39 +49,15 @@ return {
 		},
 	},
 	config = function()
-		local java = require("java").setup()
+		--local java = require("java").setup()
 		local lspconfig = require("lspconfig")
 
 		local jdtls_setup = lspconfig.jdtls.setup({
-			settings = {
-				java = {
-					configuration = {
-						runtimes = {
-							{
-								name = "JavaSE-23",
-								path = "/opt/jdk-23",
-								default = "true",
-							},
-						},
-						java_test = {
-							enable = true,
-						},
-						java_debug_adapter = {
-							enable = true,
-						},
-						spring_boot_tools = {
-							enable = true,
-						},
-						jdk = {
-							auto_install = true,
-							version = "23.0.2",
-						},
-						notifications = {
-							dap = true,
-						},
-					},
+			require("java").setup({
+				root_markers = {
+					".gitignore",
 				},
-			},
+			}),
 		})
 
 		local mason_lspconfig = require("mason-lspconfig")
@@ -135,7 +142,7 @@ return {
 					underline = true,
 					severity_sort = true,
 					float = {
-						relative = "curosor",
+						relative = "cursor",
 						border = "rounded",
 						source = false,
 					},
@@ -144,12 +151,12 @@ return {
 		}
 		mason_lspconfig.setup_handlers({
 			function(server_name)
-				--	lspconfig[server_name].setup({
-				--		capabilities = capabilities,
-				--	})
-				lspconfig[server_name].setup(vim.tbl_deep_extend("force", default_lsp_config, {
+				lspconfig[server_name].setup({
+					capabilities = capabilities,
+				})
+				--[[ lspconfig[server_name].setup(vim.tbl_deep_extend("force", default_lsp_config, {
 					-- Server specific options can be added here
-				}))
+				})) ]]
 			end,
 
 			["lua_ls"] = function()
@@ -205,7 +212,7 @@ return {
 					},
 				})
 			end, ]]
-			["clangd"] = function()
+			--[[ ["clangd"] = function()
 				lspconfig["clangd"].setup({
 					capabilities = capabilities,
 					settings = {
@@ -219,7 +226,7 @@ return {
 						},
 					},
 				})
-			end,
+			end, ]]
 		})
 	end,
 }

@@ -6,7 +6,7 @@ return {
 		lint.linters_by_ft = {
 			--python = { "pylint" },
 			--cmake = { "cmakelint" },
-			cpp = { "cpplint" },
+			--cpp = { "cpplint" },
 			--json = { "jsonlint" },
 			lua = { "luacheck" },
 		}
